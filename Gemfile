@@ -14,10 +14,14 @@ gem 'rb-readline'
 gem 'rake', '0.8.7'
 
 group :production do
-
   # gems specifically for Heroku go here
   gem "pg"
+end
 
+group :development, :test do
+  # sqlite3 is only for development and test. It is not supported for production in HEROKU
+  # http://stackoverflow.com/questions/7963561/heroku-stack-cedar-cannot-run-git-push-heroku-master
+  gem 'sqlite3'
 end
 
 # Gems used only for assets and not required
