@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Silverstar</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <title><%= title %></title>
+  
   <%= javascript_include_tag "application" %>
+  <%= render "layouts/stylesheets" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+	<div class="container">
+		<%= render "layouts/header" %>
+		<section class="round">
+			<%= yield %>
+		</section>
+		<%= render "layouts/footer" %>
+	</div>
 </body>
 </html>
