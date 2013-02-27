@@ -7,8 +7,6 @@ gem 'rails', '3.2.12'
 
 #gem 'sqlite3-ruby', '1.2.5', :group => :development
 
-gem 'sqlite3'
-
 gem 'rb-readline'
 
 gem 'rake', '0.8.7'
