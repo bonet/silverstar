@@ -11,6 +11,8 @@ gem 'rb-readline'
 
 gem 'rake', '0.8.7'
 
+gem 'gravatar_image_tag', '0.1.0'
+
 group :production do
   # gems specifically for Heroku go here
   gem "pg"
