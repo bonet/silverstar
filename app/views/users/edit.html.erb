@@ -1,4 +1,15 @@
 <h1>Edit User Info</h1>
-<%= form_for @user, :url => { :action => "edit" } do |f| %>
-  <%= f.text_field %>
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages'%>
+  <div class="field">
+  	<%= f.label :name %>
+  	<%= f.text_field :name %>
+  </div>
+  <div class="field">
+  	<%= f.label :email %>
+  	<%= f.text_field :email %>
+  </div>
+  <div class="action">
+  	<%= f.submit "Update Info"%>
+  </div>
 <% end %>

@@ -10,6 +10,10 @@ module SessionsHelper
     session.include? :user_id
   end
   
+  def deny_access
+    redirect_to signin_path, :notice => "Please Sign In to access this page"
+  end
+  
   def sign_out
     session[:user_id] = nil
   end

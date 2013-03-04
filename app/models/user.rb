@@ -10,8 +10,10 @@
 #
 
 class User < ActiveRecord::Base
-  attr_accessor :password
-  attr_accessible :email, :name, :password, :password_confirmation
+  
+  attr_accessor :password # virtual attribute (a.k.a not in the database).  User class already has :email and :password attributes -> from Users db table columns
+
+  attr_accessible :email, :name, :password, :password_confirmation # for "new User(params_array)" (a.k.a mass assignment)
   
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
@@ -20,11 +22,11 @@ class User < ActiveRecord::Base
   validates :email, :presence => true,
                     :format => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
-  validates :password, :presence => true,
-                       :confirmation => true,
-                       :length => { :within => 6..40 }
+  validates :password, :presence => { :if =>  :new_user_or_password_parameter_exists? }, 
+                       :confirmation => { :if =>  :new_user_or_password_parameter_exists? },  # automatically creates ':password_confirmation' virtual attribute
+                       :length => { :if =>  :new_user_or_password_parameter_exists?, :within => 6..40 }
                        
-  before_save :encrypt_password
+  before_save :encrypt_password, :if => :new_user_or_password_parameter_exists?
   
   
   def self.authenticate(email, submitted_password)
@@ -41,7 +43,13 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
   end
-                       
+      
+  protected
+  
+    def new_user_or_password_parameter_exists?
+      self.new_record? || self.password.present?
+    end
+                   
   private
   
     def encrypt_password
