@@ -1,20 +1,49 @@
+/*
 .container {
 	width: 710px;
 }
+*/
 
 body {
-	background: #cff;
+	background: #6cc;
 }
 
 header {
-	padding-top: 20px;
+	/*padding-top: 20px; */
+	height: 70px;
 }
+
 
 header img {
 	padding: 1em;
 	background: #fff;
 }
 
+header .logo_header {
+	 width: 300px; 
+	 float: left;
+}
+
+/*
+header .logo_header h1 {
+	 height: 20px; 
+	 font-family: Impact, Charcoal, sans-serif; 
+	 font-size: 30px;
+	 letter-spacing: 1px;
+	 text-decoration: underline;
+}
+
+header .logo_header h1 a, header .logo_header h1 a:visited {
+	 color: #585850; 
+}
+
+header .logo_header h2 {
+	 font-family: Charcoal, sans-serif; 
+	 letter-spacing: 1px; 
+	 font-size: 15px; 
+	 font-weight: bold;
+}
+*/
 section {
 	margin-top: 1em;
 	font-size: 120%;
@@ -76,6 +105,10 @@ nav ul li a:visited {
 
 nav ul li a:hover {
 	text-decoration: underline;
+}
+
+.span4homewidth {
+	width: 350px;
 }
 
 /* Sign up button */

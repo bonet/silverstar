@@ -1,16 +1,16 @@
 module SessionsHelper
   
   def sign_in(user)
-    session[:valid_user] = user.id
+    session[:user_id] = user.id
     #logger.debug "SESSION IS: "  + session.to_s
   end
   
   def signed_in?
-    #logger.debug "SIGNED IN?" + session[:valid_user].to_s
-    session.include? :valid_user
+    #logger.debug "SIGNED IN?" + session[:user_id].to_s
+    session.include? :user_id
   end
   
   def sign_out
-    session[:valid_user] = nil
+    session[:user_id] = nil
   end
 end
