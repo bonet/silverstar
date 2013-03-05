@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
   
   def create
-    logger.debug params[:user].to_s
+    #logger.debug params[:user].to_s
     @user = User.new(params[:user])
 
     if @user.save
@@ -38,9 +38,20 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(session[:user_id])
+    logger.debug "+++ USER PASSWORD I: "+ @user.password.to_s
+    param_hash = { :name => params[:user][:name], :email => params[:user][:email] }
 
-    logger.debug "USER PASSWORD I: "+ @user.password.to_s
-    if @user.update_attributes(:name => params[:user][:name], :email => params[:user][:email])
+    #only update avatar if the avatar file is present
+    if params[:user][:avatar].present? 
+      param_hash[:avatar] = params[:user][:avatar]
+    end
+    
+    #only update password if password field is present
+    if params[:user][:password].present? 
+      param_hash[:password] = params[:user][:password]
+    end
+    
+    if @user.update_attributes(param_hash)
       logger.debug "USER PASSWORD II: "+ @user.password.to_s
       flash[:success] = "Profile Updated"
       redirect_to @user

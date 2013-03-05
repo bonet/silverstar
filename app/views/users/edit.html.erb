@@ -1,5 +1,5 @@
 <h1>Edit User Info</h1>
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, :html => { :multipart => true }) do |f| %>
   <%= render 'shared/error_messages'%>
   <div class="field">
   	<%= f.label :name %>
@@ -8,6 +8,18 @@
   <div class="field">
   	<%= f.label :email %>
   	<%= f.text_field :email %>
+  </div>
+  <div class="field">
+  	<%= f.label :avatar %>
+  	<%= f.file_field :avatar %>
+  </div>
+  <div class="field">
+  	<%= f.label :password %>
+  	<%= f.password_field :password %>
+  </div>
+  <div class="field">
+  	<%= f.label :password_confirmation %>
+  	<%= f.password_field :password_confirmation %>
   </div>
   <div class="action">
   	<%= f.submit "Update Info"%>
