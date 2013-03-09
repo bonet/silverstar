@@ -5,8 +5,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign Up"
-    x = Counter.find_by(_id: "userid")
-    Rails.logger.debug "X:" + x.to_s
+
     #logger.debug "Log Level is: " + logger.level.to_s
   end
   
