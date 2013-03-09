@@ -3,7 +3,7 @@
   <tr>
   	<td class="main">
   	  <h1>
-        <%= image_tag @user.avatar.url(:small) %>
+        <%= image_tag ('http://' + @user.avatar.s3_host_alias + '/'+ @user.avatar.s3_bucket.instance_values['name'] + @user.avatar.path(:small) + '?' + @user.avatar.updated_at.to_s) %>
         <%= @user.username %>
       </h1>
     </td>

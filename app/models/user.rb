@@ -50,19 +50,19 @@ class User
   
   #Paperclip Stuff
   has_mongoid_attached_file :avatar, 
-                                :path           => '/project-silverstar/images/:id/:style.:extension',
+                                :path           => '/images/:id/:style.:extension',
                                 :storage        => :s3,
                                 :url            => ':s3_alias_url',
-                                :s3_host_alias  => 's3-ap-southeast-1.amazonaws.com',
+                                :s3_host_alias  => ENV['S3_HOST'],
                                 :s3_credentials => { 
-                                                     :bucket => S3_CONFIG['aws_bucket'],
-                                                     :access_key_id => S3_CONFIG['aws_access_key_id'],                   
-                                                     :secret_access_key => S3_CONFIG['aws_secret_access_key'] 
+                                                     :bucket => ENV['AWS_BUCKET'],
+                                                     :access_key_id => ENV['AWS_ACCESS_KEY_ID'],                   
+                                                     :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY'] 
                                                      },
                                 :styles         => {
                                                      #:original => ['1920x1680>', :jpg],
                                                      :small    => ['100x100#',   :jpg],
-                                                     :medium   => ['250x250',    :jpg],
+                                                     #:medium   => ['250x250',    :jpg],
                                                      #:large    => ['500x500>',   :jpg]
                                                      }
                              
