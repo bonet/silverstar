@@ -1,0 +1,9 @@
+development:
+  aws_bucket: 'something'
+  aws_access_key_id: 'something'
+  aws_secret_access_key: 'something'
+
+production:
+  aws_bucket: 'something'
+  aws_access_key_id: 'something'
+  aws_secret_access_key: 'something'

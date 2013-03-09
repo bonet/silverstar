@@ -9,20 +9,35 @@
 #  updated_at :datetime         not null
 #
 
-class User < ActiveRecord::Base
+class User
 
-  require 'paperclip'
+  include Mongoid::Document
+  include Mongoid::Paperclip
+  
+  field :userid
+  field :email
+  field :username
+  field :salt
+  field :encrypted_password
+  field :avatar_file_name
+  field :avatar_content_type
+  field :avatar_file_size
+  field :avatar_updated_at
+  
+  index({ email: 1 }, { unique: true, name: "email_index" })
+  index({ userid: 1 }, { unique: true, name: "userid_index" })
   
   #attr
   attr_accessor :password # virtual attribute (a.k.a not in the database).  User class already has :email and :password attributes -> from Users db table columns
 
-  attr_accessible :email, :name, :password, :password_confirmation, :avatar # for "new User(params_array)" (a.k.a mass assignment)
+  attr_accessible :email, :username, :password, :password_confirmation, :avatar # for "new User(params_array)" (a.k.a mass assignment)
   
   #validation
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  validates :name, :presence => true,
-                   :length => { :maximum => 50 }
+  validates :username, :presence => true,
+                       :length => { :maximum => 20 },
+                       :uniqueness => { :case_sensitive => false }
                    
   validates :email, :presence => true,
                     :format => { :with => email_regex },
@@ -34,13 +49,28 @@ class User < ActiveRecord::Base
   
   
   #Paperclip Stuff
-  has_attached_file :avatar, :styles => { :small => "150x150" },
-                             :url => "/assets/users/:id/:style/:basename.:extension",
-                             :path => ":rails_root/public/assets/users/:id/:style/:basename.:extension"
+  has_mongoid_attached_file :avatar, 
+                                :path           => '/project-silverstar/images/:id/:style.:extension',
+                                :storage        => :s3,
+                                :url            => ':s3_alias_url',
+                                :s3_host_alias  => 's3-ap-southeast-1.amazonaws.com',
+                                :s3_credentials => { 
+                                                     :bucket => S3_CONFIG['aws_bucket'],
+                                                     :access_key_id => S3_CONFIG['aws_access_key_id'],                   
+                                                     :secret_access_key => S3_CONFIG['aws_secret_access_key'] 
+                                                     },
+                                :styles         => {
+                                                     #:original => ['1920x1680>', :jpg],
+                                                     :small    => ['100x100#',   :jpg],
+                                                     :medium   => ['250x250',    :jpg],
+                                                     #:large    => ['500x500>',   :jpg]
+                                                     }
                              
   validates_attachment :avatar, :presence => { :if =>  :new_user_or_avatar_parameter_exists? },
                                 :size => { :if =>  :new_user_or_avatar_parameter_exists?, :less_than => 5.megabytes },
                                 :content_type => { :if =>  :new_user_or_avatar_parameter_exists?, :content_type => ['image/jpeg', 'image/png'] }
+                                
+
 
   #Paperclip Stuff Ends
   

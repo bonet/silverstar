@@ -1,5 +1,9 @@
 Silverstar::Application.routes.draw do
+  resources :articles
 
+
+  resources :vehicle
+  
   get "sessions/new"
 
   resources :users

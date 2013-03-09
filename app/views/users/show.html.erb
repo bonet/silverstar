@@ -4,11 +4,11 @@
   	<td class="main">
   	  <h1>
         <%= image_tag @user.avatar.url(:small) %>
-        <%= @user.name %>
+        <%= @user.username %>
       </h1>
     </td>
     <td class="sidebar round">
-    	<strong>Name</strong> <%= @user.name %> <br />
+    	<strong>Name</strong> <%= @user.username %> <br />
     	<strong>URL</strong> <%= link_to user_path(@user), @user%> <br />
     	<span><%= link_to "Edit Info",  edit_user_path(@user) %></span>
     </td>

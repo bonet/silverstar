@@ -5,6 +5,8 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     @title = "Sign Up"
+    x = Counter.find_by(_id: "userid")
+    Rails.logger.debug "X:" + x.to_s
     #logger.debug "Log Level is: " + logger.level.to_s
   end
   
@@ -14,11 +16,14 @@ class UsersController < ApplicationController
     end
     
     @user = User.find(params[:id])
-    @title = @user.name
+    @title = @user.username
   end
   
   def create
     #logger.debug params[:user].to_s
+    
+    #Counter.create(seq: 0) if Counter.find_by(_id: "userid").nil?
+    
     @user = User.new(params[:user])
 
     if @user.save
@@ -39,7 +44,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(session[:user_id])
     logger.debug "+++ USER PASSWORD I: "+ @user.password.to_s
-    param_hash = { :name => params[:user][:name], :email => params[:user][:email] }
+    param_hash = { :username => params[:user][:username], :email => params[:user][:email] }
 
     #only update avatar if the avatar file is present
     if params[:user][:avatar].present? 
