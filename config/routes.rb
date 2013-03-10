@@ -1,5 +1,4 @@
 Silverstar::Application.routes.draw do
-  resources :vehicle
   
   get "sessions/new"
 
