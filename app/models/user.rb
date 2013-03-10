@@ -9,8 +9,11 @@
 #  updated_at :datetime         not null
 #
 
-class User
-
+class User < ActiveRecord::Base
+  
+  require 'paperclip'
+  
+=begin
   include Mongoid::Document
   include Mongoid::Paperclip
   
@@ -26,7 +29,8 @@ class User
   
   index({ email: 1 }, { unique: true, name: "email_index" })
   index({ userid: 1 }, { unique: true, name: "userid_index" })
-  
+=end
+
   #attr
   attr_accessor :password # virtual attribute (a.k.a not in the database).  User class already has :email and :password attributes -> from Users db table columns
 
@@ -49,10 +53,9 @@ class User
   
   
   #Paperclip Stuff
-  has_mongoid_attached_file :avatar, 
-                                :path           => '/images/:id/:style.:extension',
+  has_attached_file :avatar, :path           => '/images/:id/:style.:extension',
                                 :storage        => :s3,
-                                :url            => ':s3_alias_url',
+                                :url            => ':s3_domain_url',
                                 :s3_host_alias  => ENV['S3_HOST'],
                                 :s3_credentials => { 
                                                      :bucket => ENV['AWS_BUCKET'],
